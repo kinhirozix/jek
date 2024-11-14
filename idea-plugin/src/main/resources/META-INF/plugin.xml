@@ -10,11 +10,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="JEK Notifications" displayType="BALLOON"/>
-        <localInspection
-            language="kotlin"
-            implementationClass="jek.idea.inspection.ExpectActualAllowedInJvmInspection"
-            displayName="Allow expect/actual modifiers in JVM"
-            groupName="Kotlin"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
