@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+    <style>
+        @font-face {
+            font-family: "sakura";
+            src: url("https://kinhirozix.github.io/maven/fonts/sakura.ttf") format("truetype");
+        }
+
+        text {
+            font-family: "sakura", sans-serif;
+            font-style: bold;
+        }
+    </style>
+    <text fill="gold" x="540" y="360" font-size="360" text-anchor="middle">JEK</text>
+    <text fill="gold" x="540" y="720" font-size="270" text-anchor="middle">只够金寻</text>
+</svg>
