@@ -64,7 +64,6 @@ subprojects {
 
     repositories {
         mavenCentral()
-        maven(rootProject.property("maven_local").toString())
     }
 
     tasks {

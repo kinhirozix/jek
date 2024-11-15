@@ -11,4 +11,7 @@ abstract class ProjectExtension @Inject constructor(
     private val project: Project
 ) : ExtensionAware {
     val projectType: Property<ProjectType> get() = objects.property(ProjectType::class.java)
+
+    fun common() = projectType.set(ProjectType.COMMON)
+    fun platform() = projectType.set(ProjectType.PLATFORM)
 }

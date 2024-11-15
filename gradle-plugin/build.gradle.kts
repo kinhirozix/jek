@@ -25,7 +25,7 @@ gradlePlugin {
 
 publishing {
     repositories {
-        maven(rootProject.property("maven_local").toString())
+        mavenLocal()
     }
 
     publications {

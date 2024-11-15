@@ -15,4 +15,4 @@ if (JavaVersion.current().ordinal + 1 < 21) throw IllegalStateException("Please 
 
 rootProject.name = "jek"
 
-include(":compiler-plugin", ":gradle-plugin", ":idea-plugin")
+include(":compiler-plugin", ":compiler-plugin-embeddable", ":gradle-plugin", ":idea-plugin")

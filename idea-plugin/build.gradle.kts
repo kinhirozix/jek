@@ -5,7 +5,8 @@ plugins {
     id("org.jetbrains.changelog")
 }
 
-description = "Just Enough Kinhiro (JB)"
+base.archivesName = "jek-idea-plugin"
+description = "Just Enough Kinhiro (IP)"
 
 idea {
     module {

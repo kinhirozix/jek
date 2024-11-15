@@ -195,4 +195,9 @@ gradle-app.setting
 # Ignore org.intellij.idea.platform plugin files by Kinhiro
 .intellijPlatform
 
+# Ignore temp all files by Kinhiro
+# The path is just for storing some temporary files that are convenient for editing
+# with IDEA features and shouldn't be included in the repo.
+temp
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,jetbrains+all,java,kotlin,gradle

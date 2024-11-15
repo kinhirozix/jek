@@ -33,7 +33,8 @@ class JekPlugin : KotlinCompilerPluginSupportPlugin {
 
     override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean {
         val target = kotlinCompilation.target
-        return target.project.plugins.hasPlugin("org.jetbrains.kotlin.jvm") &&
+        val project = target.project
+        return project.pluginManager.hasPlugin("org.jetbrains.kotlin.jvm") &&
             when (kotlinCompilation.platformType) {
                 KotlinPlatformType.jvm -> true
                 else -> false
@@ -55,7 +56,8 @@ class JekPlugin : KotlinCompilerPluginSupportPlugin {
     private fun Project.configureIdeaPlugin() {
         plugins.apply("idea")
         pluginManager.withPlugin("idea") {
-            extensions.configure(IdeaModel::class.java) { idea ->
+            val ideaExtension = extensions.getByType(IdeaModel::class.java)
+            if (!ideaExtension.module.isDownloadSources) extensions.configure(IdeaModel::class.java) { idea ->
                 idea.module { module ->
                     module.isDownloadSources = true
                 }
