@@ -1,9 +1,18 @@
 plugins {
-    `maven-publish`
+    kotlin("jvm")
+    id("maven-publish")
 }
 
 base.archivesName = "jek-compiler-plugin"
-description = "Just Enough Kinhiro (KCP)"
+description = "Just Enough Kinhiro (Kotlin Compiler Plugin)"
+
+kotlin {
+    sourceSets.all {
+        languageSettings {
+            optIn("org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi")
+        }
+    }
+}
 
 dependencies {
     implementation(libs.kotlin.stdlib)
@@ -16,22 +25,6 @@ tasks {
             attributes(
                 "Implementation-Version" to project.version
             )
-        }
-    }
-}
-
-publishing {
-    repositories {
-        mavenLocal()
-    }
-
-    publications {
-        create<MavenPublication>("jekKotlinCompilerPluginMaven") {
-            groupId = project.group.toString()
-            artifactId = project.base.archivesName.get()
-            version = project.version.toString()
-            description = project.description
-            from(components["java"])
         }
     }
 }

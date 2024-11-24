@@ -115,10 +115,8 @@ fabric.properties
 !.idea/codeStyles
 !.idea/runConfigurations
 
-# Ignore project icon by Kinhiro :)
+# Ignore IntelliJ IDEA project's icon by Kinhiro Zix :)
 !.idea/icon.svg
-# Include generated run configurations by Kinhiro (:
-.idea/runConfigurations
 
 ### Kotlin ###
 # Compiled class file
@@ -133,7 +131,7 @@ fabric.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 
-# Include kotlin language settings files by Kinhiro (:
+# Include Kotlin ** cache(?) by Kinhiro Zix :)
 .kotlin
 
 ### Windows ###
@@ -189,15 +187,9 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# Ignore local runs files by Kinhiro :)
-*/runs
-
-# Ignore org.intellij.idea.platform plugin files by Kinhiro
-.intellijPlatform
-
 # Ignore temp all files by Kinhiro
 # The path is just for storing some temporary files that are convenient for editing
 # with IDEA features and shouldn't be included in the repo.
-temp
+.temp
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,jetbrains+all,java,kotlin,gradle

@@ -2,93 +2,87 @@
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    idea
     alias(libs.plugins.kotlin.jvm) apply false
-    alias(libs.plugins.intellij.platform) apply false
-    alias(libs.plugins.changelog) apply false
-    alias(libs.plugins.spotless)
+    alias(libs.plugins.spotless) apply false
+    alias(libs.plugins.shadow) apply false
+    id("me.kinhiro.composite.root")
 }
 
-idea {
-    module {
-        isDownloadSources = true
-    }
-}
+allprojects {
+    group = providers.gradleProperty("maven.group").getOrElse("me.kinhiro.jek")
+    version = providers.gradleProperty("maven.version").getOrElse("0.0.1")
 
-group = property("maven_group").toString()
-version = property("maven_version").toString()
+    /**
+     * Retrieves the Java version by checking the local build environment.
+     * The value is determined as follows (in order of precedence):
+     * 1. The value of the Gradle property `java.version`, if set.
+     * 2. The default hardcoded value of `21`.
+     */
+    val javaVersion = providers.gradleProperty("java.version").getOrElse("21")
+    val java = javaVersion.toInt()
 
-spotless {
-    kotlin {
-        target("**/*.kt")
-        licenseHeaderFile("$rootDir/spotless/license-header.txt", "^(package|@)")
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
-tasks.named("check").get().dependsOn("spotlessCheck")
-tasks.named("assemble").get().dependsOn("spotlessApply")
-
-subprojects {
-    apply(plugin = "idea")
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-
-    group = rootProject.group
-    version = rootProject.version
-
-    extensions.configure<JavaPluginExtension> {
-        toolchain.languageVersion = JavaLanguageVersion.of(21)
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-        withSourcesJar()
-    }
-
-    extensions.configure<KotlinJvmProjectExtension> {
-        jvmToolchain(21)
-
-        sourceSets.all {
-            languageSettings {
-                optIn("kotlin.RequiresOptIn")
-                optIn("org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi")
-            }
+    pluginManager.withPlugin("java") {
+        extensions.configure<JavaPluginExtension> {
+            toolchain.languageVersion = JavaLanguageVersion.of(java)
+            sourceCompatibility = JavaVersion.toVersion(javaVersion)
+            targetCompatibility = JavaVersion.toVersion(javaVersion)
+            withSourcesJar()
         }
-    }
 
-    repositories {
-        mavenCentral()
-    }
-
-    tasks {
-        withType<JavaCompile> {
+        tasks.withType<JavaCompile> {
             options.encoding = "UTF-8"
-            options.release = 21
-            sourceCompatibility = "21"
-            targetCompatibility = "21"
+            options.release = java
+            sourceCompatibility = javaVersion
+            targetCompatibility = javaVersion
         }
 
-        withType<KotlinCompile> {
+        tasks.withType<Jar> {
+            if (name in listOf("jar", "sourcesJar")) from(rootProject.file("LICENSE")) {
+                rename("LICENSE", "LICENSE.txt")
+            }
+        }
+    }
+
+    /**
+     * Retrieves the Kotlin version by checking the local build environment.
+     * The value is determined as follows (in order of precedence):
+     * 1. The value of the Gradle property `kotlin.version`, if set.
+     * 2. The value of the `kotlin` key in the `versions` table of the root project's
+     * `./gradle/libs.versions.toml`, if this file exists, the table is defined and key is set.
+     * 3. The default hardcoded value of `2.0.21`.
+     */
+    val kotlinVersion = providers.gradleProperty("kotlin.version").orNull
+        ?: rootProject.libs.versions.kotlin.orNull ?: "2.0.21"
+    val kotlin = Regex("^(\\d+\\.\\d+)").find(kotlinVersion)?.groupValues?.get(0) ?: "2.0"
+    val hasKotlinLanguageSettingsProperty = providers.gradleProperty("kotlin.language.settings")
+        .getOrElse("true").toBoolean() == true
+
+    pluginManager.withPlugin(rootProject.libs.plugins.kotlin.jvm.id) {
+        extensions.configure<KotlinJvmProjectExtension> {
+            sourceSets.all {
+                languageSettings {
+                    if (hasKotlinLanguageSettingsProperty) {
+                        languageVersion = kotlin
+                        apiVersion = kotlin
+                    }
+
+                    optIn("kotlin.RequiresOptIn")
+                }
+            }
+        }
+
+        tasks.withType<KotlinCompile> {
             compilerOptions {
-                jvmTarget = JvmTarget.JVM_21
-            }
-        }
-
-        named<Jar>("jar") {
-            from(rootProject.file("LICENSE")) {
-                rename("LICENSE", "LICENSE.txt")
-            }
-        }
-
-        named<Jar>("sourcesJar") {
-            from(rootProject.file("LICENSE")) {
-                rename("LICENSE", "LICENSE.txt")
+                jvmTarget = JvmTarget.fromTarget(javaVersion)
+                freeCompilerArgs = freeCompilerArgs.get() + listOf("-Xjvm-default=all")
+                if (hasKotlinLanguageSettingsProperty) {
+                    apiVersion = KotlinVersion.fromVersion(kotlin)
+                    languageVersion = KotlinVersion.fromVersion(kotlin)
+                }
             }
         }
     }
