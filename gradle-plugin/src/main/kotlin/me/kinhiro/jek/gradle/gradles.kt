@@ -1,5 +1,3 @@
-@file:JvmSynthetic
-
 package me.kinhiro.jek.gradle
 
 import org.gradle.api.provider.Provider

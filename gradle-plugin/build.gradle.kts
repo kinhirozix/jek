@@ -30,21 +30,3 @@ gradlePlugin {
         }
     }
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("jek") {
-            groupId = providers.gradleProperty("maven.group").getOrElse(project.group.toString())
-            artifactId = providers.gradleProperty("maven.name").orNull
-                ?: project.base.archivesName.orNull ?: project.name
-            version = providers.gradleProperty("maven.version").getOrElse(project.version.toString())
-            from(components["java"])
-
-            pom {
-                name = providers.gradleProperty("maven.pom.name").getOrElse("Just Enough Kinhiro Gradle Plugin")
-                description = providers.gradleProperty("maven.pom.description").orNull ?: project.description ?: """
-                """.trimIndent()
-            }
-        }
-    }
-}
