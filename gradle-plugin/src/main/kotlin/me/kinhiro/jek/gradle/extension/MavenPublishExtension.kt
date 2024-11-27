@@ -28,6 +28,10 @@ abstract class MavenPublishExtension @Inject constructor(
             groupId.convention(groupProvider)
             val moduleProvider = project.providers.gradleProperty(GradleProperties.MAVEN_MODULE)
                 .orElse(project.baseExtension.archivesName.orElse(project.name.toArtifactId()))
+            artifactId.convention(moduleProvider)
+            val versionProvider = project.providers.gradleProperty(GradleProperties.MAVEN_VERSION)
+                .orElse(project.version.toString())
+            version.convention(versionProvider)
         }
 
         private fun String.toArtifactId(): String = replace(REGEX, "$1-$2").replace('_', '-').lowercase()

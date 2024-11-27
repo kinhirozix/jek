@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm")
     `java-gradle-plugin`
     `maven-publish`
+    id("com.gradle.plugin-publish")
 }
 
 base.archivesName = "jek-gradle-plugin"
@@ -15,18 +16,20 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("base") {
+        create("jekBasePlugin") {
             id = "me.kinhiro.jek.base"
-            implementationClass = "me.kinhiro.jek.gradle.plugin.JekBasePlugin"
             displayName = "Just Enough Kinhiro Base Gradle Plugin"
             description = project.description
+            tags = listOf("")
+            implementationClass = "me.kinhiro.jek.gradle.plugin.JekBasePlugin"
         }
 
-        create("jek") {
+        create("jekPlugin") {
             id = "me.kinhiro.jek"
-            implementationClass = "me.kinhiro.jek.gradle.plugin.JekPlugin"
             displayName = "Just Enough Kinhiro Gradle Plugin"
             description = project.description
+            tags = listOf()
+            implementationClass = "me.kinhiro.jek.gradle.plugin.JekPlugin"
         }
     }
 }

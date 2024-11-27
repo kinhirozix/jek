@@ -11,7 +11,6 @@ import javax.inject.Inject
 abstract class PublishExtension @Inject constructor(
     private val objects: ObjectFactory
 ) : ExtensionAware {
-
     companion object : Registrable<PublishExtension> {
         override fun register(project: Project, target: Any): PublishExtension = target.configureExtension(
             Extensions.PUBLISH

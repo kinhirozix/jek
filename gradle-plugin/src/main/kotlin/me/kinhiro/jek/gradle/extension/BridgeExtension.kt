@@ -13,6 +13,7 @@ abstract class BridgeExtension @Inject constructor(
     private val objects: ObjectFactory
 ) : ExtensionAware {
     val enabled: Property<Boolean> get() = objects.property(Boolean::class.java)
+    val debug: Property<Boolean> get() = objects.property(Boolean::class.java)
     val type: Property<BridgeType> get() = objects.property(BridgeType::class.java)
 
     companion object : Registrable<BridgeExtension> {
@@ -20,9 +21,10 @@ abstract class BridgeExtension @Inject constructor(
             Extensions.BRIDGE
         ) {
             enabled.convention(true)
-            val common = project.path.contentEquals(":common", true)
-            val shared = project.path.contentEquals(":shared", true)
-            if (common || shared) type.convention(BridgeType.EXPECT)
+            debug.convention(false)
+            val isCommon = project.path.equals(":common", true)
+            val isShared = project.path.equals(":shared", true)
+            if (isCommon || isShared) type.convention(BridgeType.EXPECT)
         }
     }
 }
