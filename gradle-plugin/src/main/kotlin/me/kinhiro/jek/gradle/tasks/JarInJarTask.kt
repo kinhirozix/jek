@@ -1,7 +1,7 @@
 package me.kinhiro.jek.gradle.tasks
 
-import me.kinhiro.jek.gradle.Constants.Descriptions
-import me.kinhiro.jek.gradle.Constants.Tasks
+import me.kinhiro.jek.gradle.JekConstants.Descriptions
+import me.kinhiro.jek.gradle.JekConstants.Tasks
 import org.gradle.api.Project
 import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.jvm.tasks.Jar

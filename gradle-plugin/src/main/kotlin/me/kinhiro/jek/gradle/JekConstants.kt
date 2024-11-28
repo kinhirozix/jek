@@ -2,7 +2,7 @@ package me.kinhiro.jek.gradle
 
 import org.gradle.util.GradleVersion
 
-object Constants {
+object JekConstants {
     const val CACHE_DIR: String = ".jek"
 
     object Plugin {
@@ -22,7 +22,6 @@ object Constants {
         const val JEK: String = "jek"
         const val BRIDGE: String = "bridge"
         const val PUBLISH: String = "publish"
-        const val MAVEN_PUBLISH: String = "maven"
     }
 
     object Repositories {
@@ -79,7 +78,7 @@ object Constants {
     }
 
     object Links {
-        const val GITHUB_REPO: String = "https://github.com/kinhirozix/jek"
+        const val GITHUB_REPOSITORY: String = "https://github.com/kinhirozix/jek"
     }
 
     object Descriptions {

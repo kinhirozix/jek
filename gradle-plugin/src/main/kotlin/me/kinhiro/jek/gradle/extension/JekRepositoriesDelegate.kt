@@ -19,10 +19,10 @@ class JekRepositoriesDelegate(
         url: String,
         urlWithGithubPersonal: String = url,
         action: Action<MavenArtifactRepository> = Action {}
-    ): MavenArtifactRepository = providers.gradleProperty(GradleProperties.UseMavenPersonal).map { useMavenPersonal ->
+    ): MavenArtifactRepository = providers.gradleProperty(GradleProperties.UseGithubPersonal).map { useGithubPersonal ->
         repositories.maven { repo ->
             repo.name = name
-            repo.url = URI.create(if (useMavenPersonal) url else urlWithGithubPersonal)
+            repo.url = URI.create(if (useGithubPersonal) url else urlWithGithubPersonal)
             action.execute(repo)
         }
     }.getOrElse(repositories.mavenLocal())

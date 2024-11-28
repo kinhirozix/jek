@@ -1,8 +1,8 @@
 package me.kinhiro.jek.gradle.extension
 
-import me.kinhiro.jek.gradle.Constants.Extensions
-import me.kinhiro.jek.gradle.Constants.Repositories
-import me.kinhiro.jek.gradle.JustEnoughKinhiro
+import me.kinhiro.jek.gradle.JekConstants.Extensions
+import me.kinhiro.jek.gradle.JekConstants.Repositories
+import me.kinhiro.jek.gradle.JustEnoughKinhiroDsl
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler
@@ -13,7 +13,7 @@ import org.gradle.api.provider.ProviderFactory
 import java.io.File
 import javax.inject.Inject
 
-@JustEnoughKinhiro
+@JustEnoughKinhiroDsl
 abstract class JekRepositoriesExtension @Inject constructor(
     private val objects: ObjectFactory,
     private val repositories: RepositoryHandler,

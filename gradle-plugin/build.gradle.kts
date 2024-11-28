@@ -12,6 +12,8 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(project(":compiler-plugin"))
     implementation(libs.kotlin.gradle.plugin.api)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.xmlutil.serialization)
 }
 
 gradlePlugin {
