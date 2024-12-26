@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.spotless) apply false
     alias(libs.plugins.shadow) apply false
     alias(libs.plugins.plugin.publish) apply false
-    id("me.kinhiro.composite.root")
+    id("com.kinhiro.composite.root")
 }
 
 allprojects {
@@ -57,8 +57,8 @@ allprojects {
      * 3. The default hardcoded value of `2.0.21`.
      */
     val kotlinVersion = providers.gradleProperty("kotlin.version").orNull
-        ?: rootProject.libs.versions.kotlin.orNull ?: "2.0.21"
-    val kotlin = Regex("^(\\d+\\.\\d+)").find(kotlinVersion)?.groupValues?.get(0) ?: "2.0"
+        ?: rootProject.libs.versions.kotlin.orNull ?: "2.1.0"
+    val kotlin = Regex("^(\\d+\\.\\d+)").find(kotlinVersion)?.groupValues?.get(0) ?: "2.1"
     val hasKotlinLanguageSettingsProperty = providers.gradleProperty("kotlin.language.settings")
         .getOrElse("true").toBoolean() == true
 

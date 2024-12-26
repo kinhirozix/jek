@@ -69,13 +69,13 @@ dependencies {
 gradlePlugin {
     plugins {
         create("settings") {
-            id = "me.kinhiro.composite.settings"
-            implementationClass = "me.kinhiro.composite.RootSettings"
+            id = "com.kinhiro.composite.settings"
+            implementationClass = "com.kinhiro.composite.RootSettings"
         }
 
         create("root") {
-            id = "me.kinhiro.composite.root"
-            implementationClass = "me.kinhiro.composite.RootPlugin"
+            id = "com.kinhiro.composite.root"
+            implementationClass = "com.kinhiro.composite.RootPlugin"
         }
     }
 }
