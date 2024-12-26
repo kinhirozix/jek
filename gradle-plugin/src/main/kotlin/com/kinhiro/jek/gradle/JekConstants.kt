@@ -67,5 +67,6 @@ object JekConstants {
     object GradleProperties {
         private const val PREFIX: String = "com.kinhiro.jek"
         const val USE_MAVEN_PERSONAL: String = "$PREFIX.use.maven.personal"
+        const val DOWNLOAD_SOURCES: String = "$PREFIX.download.sources"
     }
 }

@@ -1,6 +1,6 @@
 package com.kinhiro.jek.gradle.extension
 
-import me.kinhiro.jek.gradle.JekConstants.GradleProperties
+import com.kinhiro.jek.gradle.JekConstants.GradleProperties
 import org.gradle.api.Action
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
@@ -18,11 +18,11 @@ class JekRepositoriesDelegate(
         url: String,
         urlWithPersonalRepository: String = url,
         action: Action<MavenArtifactRepository> = Action {}
-    ): MavenArtifactRepository = providers.gradleProperty(GradleProperties.USE_PERSONAL_REPOSITORY)
-        .map { usePersonalRepository ->
+    ): MavenArtifactRepository = providers.gradleProperty(GradleProperties.USE_MAVEN_PERSONAL)
+        .map { useMavenPersonal ->
             repositories.maven { repo ->
                 repo.name = name
-                repo.url = URI.create(if (usePersonalRepository.toBoolean()) url else urlWithPersonalRepository)
+                repo.url = URI.create(if (useMavenPersonal.toBoolean()) url else urlWithPersonalRepository)
                 action.execute(repo)
             }
         }.getOrElse(repositories.mavenLocal())

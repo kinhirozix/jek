@@ -1,11 +1,11 @@
 package com.kinhiro.jek.gradle.plugin
 
-import me.kinhiro.jek.gradle.JekConstants
-import me.kinhiro.jek.gradle.JekConstants.Extensions
-import me.kinhiro.jek.gradle.JekConstants.Plugins
-import me.kinhiro.jek.gradle.extension.*
-import me.kinhiro.jek.gradle.gradleProperty
-import me.kinhiro.jek.gradle.util.Logger
+import com.kinhiro.jek.gradle.JekConstants
+import com.kinhiro.jek.gradle.JekConstants.Extensions
+import com.kinhiro.jek.gradle.JekConstants.GradleProperties
+import com.kinhiro.jek.gradle.JekConstants.Plugins
+import com.kinhiro.jek.gradle.extension.*
+import com.kinhiro.jek.gradle.util.Logger
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
@@ -26,8 +26,8 @@ abstract class JekBasePlugin : Plugin<Project> {
         with(target.pluginManager) {
             withPlugin(Plugins.External.IDEA) {
                 target.extensions.configureExtension<IdeaModel>(Extensions.External.IDEA) {
-                    module.isDownloadSources = target.providers.gradleProperty(GradleProperties.DownloadSources)
-                        .getOrElse(true)
+                    module.isDownloadSources = target.providers.gradleProperty(GradleProperties.DOWNLOAD_SOURCES)
+                        .getOrElse("true").toBoolean()
                     module.excludeDirs.add(target.rootDir.resolve(JekConstants.CACHE_DIR))
                 }
             }

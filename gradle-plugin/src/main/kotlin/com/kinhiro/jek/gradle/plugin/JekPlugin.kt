@@ -15,7 +15,7 @@
  */
 package com.kinhiro.jek.gradle.plugin
 
-import me.kinhiro.jek.JekConstants
+import com.kinhiro.jek.JekConstants
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
