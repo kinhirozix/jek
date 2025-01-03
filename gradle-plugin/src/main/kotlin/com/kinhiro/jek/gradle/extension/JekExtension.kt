@@ -13,6 +13,7 @@ abstract class JekExtension @Inject constructor(
     private val project: Project
 ) : ExtensionAware {
     companion object : Registrable<JekExtension> {
+        @JvmStatic
         override fun register(project: Project, target: Any): JekExtension = target.configureExtension<JekExtension>(
             Extensions.JEK
         )

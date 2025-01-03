@@ -6,7 +6,7 @@ object JekConstants {
     const val CACHE_DIR: String = ".jek"
 
     object Plugin {
-        const val ID: String = "me.kinhiro.jek"
+        const val ID: String = "com.kinhiro.jek"
         const val NAME: String = "Just Enough Kinhiro Gradle Plugin"
     }
 
@@ -21,6 +21,8 @@ object JekConstants {
     object Extensions {
         const val JEK: String = "jek"
         const val BRIDGE: String = "bridge"
+        const val JAVA_BRIDGE: String = "java"
+        const val KOTLIN_BRIDGE: String = "kotlin"
         const val PUBLISH: String = "publish"
 
         object External {

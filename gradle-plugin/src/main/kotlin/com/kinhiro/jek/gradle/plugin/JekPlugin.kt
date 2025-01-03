@@ -15,7 +15,10 @@
  */
 package com.kinhiro.jek.gradle.plugin
 
-import com.kinhiro.jek.JekConstants
+import com.kinhiro.jek.compiler.JekConstants.CompilerPlugin
+import com.kinhiro.jek.gradle.extension.BridgeExtension
+import com.kinhiro.jek.gradle.extension.JekExtension
+import com.kinhiro.jek.gradle.extension.KotlinBridgeExtension
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
@@ -28,20 +31,41 @@ class JekPlugin : KotlinCompilerPluginSupportPlugin {
         with(target.plugins) {
             apply(JekBasePlugin::class.java)
         }
+
+        with(target.pluginManager) {
+        }
+
+        with(target.extensions) {
+            JekExtension.register(target, target).let { jekExtension ->
+                BridgeExtension.register(target, jekExtension).let { bridgeExtension ->
+                    KotlinBridgeExtension.register(target, bridgeExtension)
+                }
+            }
+        }
+
+        with(target.configurations) {
+        }
+
+        with(target.repositories) {
+        }
+
+        with(target.dependencies) {
+        }
+
+        with(target.tasks) {
+        }
     }
 
     override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean = true
     override fun applyToCompilation(kotlinCompilation: KotlinCompilation<*>): Provider<List<SubpluginOption>> {
-        val target = kotlinCompilation.target
-        val project = target.project
         val parameters = mutableListOf<SubpluginOption>()
-        return project.provider { parameters }
+        return kotlinCompilation.target.project.provider { parameters }
     }
 
-    override fun getCompilerPluginId(): String = JekConstants.PLUGIN_ID
+    override fun getCompilerPluginId(): String = CompilerPlugin.ID
     override fun getPluginArtifact(): SubpluginArtifact = SubpluginArtifact(
-        "me.kinhiro",
+        "com.kinhiro.jek",
         "jek-compiler-plugin",
-        JekConstants.PLUGIN_VERSION
+        CompilerPlugin.VERSION
     )
 }

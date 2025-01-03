@@ -13,21 +13,19 @@ import javax.inject.Inject
 abstract class BridgeExtension @Inject constructor(
     private val objects: ObjectFactory
 ) : ExtensionAware {
-    private var isJava: Boolean = false
-    private var isKotlin: Boolean = false
-
     val enabled: Property<Boolean> get() = objects.property(Boolean::class.java)
     val debug: Property<Boolean> get() = objects.property(Boolean::class.java)
 
-    fun java(action: Action<Unit>) {
-        isJava = true
+    @JvmOverloads
+    fun java(action: Action<JavaBridgeExtension> = Action {}) {
     }
 
-    fun kotlin(action: Action<Unit>) {
-        isKotlin = true
+    @JvmOverloads
+    fun kotlin(action: Action<KotlinBridgeExtension> = Action {}) {
     }
 
     companion object : Registrable<BridgeExtension> {
+        @JvmStatic
         override fun register(project: Project, target: Any): BridgeExtension = target.configureExtension(
             Extensions.BRIDGE
         ) {

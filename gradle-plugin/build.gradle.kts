@@ -33,3 +33,14 @@ gradlePlugin {
         }
     }
 }
+
+tasks {
+    sourcesJar {
+        from(sourceSets.main.get().allSource)
+        archiveClassifier = "sources"
+    }
+}
+
+artifacts {
+    archives(tasks.sourcesJar)
+}

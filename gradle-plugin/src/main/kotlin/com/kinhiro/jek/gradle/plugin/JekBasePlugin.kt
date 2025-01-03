@@ -26,16 +26,21 @@ abstract class JekBasePlugin : Plugin<Project> {
         with(target.pluginManager) {
             withPlugin(Plugins.External.IDEA) {
                 target.extensions.configureExtension<IdeaModel>(Extensions.External.IDEA) {
-                    module.isDownloadSources = target.providers.gradleProperty(GradleProperties.DOWNLOAD_SOURCES)
-                        .getOrElse("true").toBoolean()
-                    module.excludeDirs.add(target.rootDir.resolve(JekConstants.CACHE_DIR))
+                    with(module) {
+                        isDownloadSources = target.providers.gradleProperty(GradleProperties.DOWNLOAD_SOURCES)
+                            .getOrElse("true").toBoolean()
+                        excludeDirs.add(target.rootDir.resolve(JekConstants.CACHE_DIR))
+                    }
                 }
             }
         }
 
         with(target.extensions) {
             JekExtension.register(target, target).let { jekExtension ->
-                BridgeExtension.register(target, jekExtension)
+                BridgeExtension.register(target, jekExtension).let { bridgeExtension ->
+                    JavaBridgeExtension.register(target, bridgeExtension)
+                }
+
                 PublishExtension.register(target, jekExtension).let { publishExtension ->
                 }
             }
